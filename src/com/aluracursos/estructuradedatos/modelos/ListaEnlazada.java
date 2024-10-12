@@ -7,11 +7,14 @@ public class ListaEnlazada {
     private int totalDeElementos = 0;
 
     public void adicionarEnElComienzo(Object elemento) {
-        Celula nueva = new Celula(elemento,primera);
-        this.primera = nueva;
-
         if(this.totalDeElementos == 0) {
-            this.ultima = this.primera;
+            Celula nueva = new Celula(elemento);
+            this.primera = nueva;
+            this.ultima = nueva;
+        }else {
+            Celula nueva = new Celula(this.primera, (Celula) elemento);
+            this.primera.setAnterior(nueva);
+            this.primera = nueva;
         }
 
         this.totalDeElementos++;
@@ -57,10 +60,15 @@ public class ListaEnlazada {
     }
 
     public void adicionar(Object elemento) {
-        Celula nueva = new Celula(elemento, null);
-        this.ultima.setProximo(nueva); //en el ultimo elemento del array viejo, el proximo sera "nueva
-        this.ultima = nueva; //ahora se setea como ultimo a "nueva"
-        this.totalDeElementos++;
+        if (this.totalDeElementos == 0) {
+            adicionarEnElComienzo(elemento);
+        } else {
+            Celula nueva = new Celula((Celula) elemento);
+            this.ultima.setProximo(nueva); //en el ultimo elemento del array viejo, el proximo sera "nueva
+            nueva.setAnterior(this.ultima);
+            this.ultima = nueva; //ahora se setea como ultimo a "nueva"
+            this.totalDeElementos++;
+        }
     }
 
     public void adiciona(int posicion, Object elemento) {
@@ -70,8 +78,12 @@ public class ListaEnlazada {
             adicionar(elemento);
         } else {
             Celula anterior = this.hallarCelula(posicion - 1);
-            Celula nueva = new Celula(elemento, anterior.getProximo());
+            Celula proxima = anterior.getProximo();
+
+            Celula nueva = new Celula(anterior.getProximo(), (Celula) elemento);
+            nueva.setAnterior(anterior);
             anterior.setProximo(nueva);
+            proxima.setAnterior(nueva);
             this.totalDeElementos++;
         }
     }
@@ -92,6 +104,17 @@ public class ListaEnlazada {
         }
     }
 
+    public void removeDelFinal() {
+        if (this.totalDeElementos == 1) {
+            this.removerDelComienzo();
+        }else {
+            Celula penultima = this.ultima.getAnterior();
+            penultima.setProximo(null);
+            this.ultima = penultima;
+            this.totalDeElementos--;
+        }
+
+    }
     public int tamaño() {
         return this.totalDeElementos;
     }

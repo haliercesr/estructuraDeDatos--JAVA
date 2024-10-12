@@ -30,5 +30,6 @@ public class VectorTeste {
         }
         System.out.println(lista);
 
+
     }
 }

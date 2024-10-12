@@ -24,5 +24,7 @@ public class ProbarListaEnlazada {
         System.out.println(lista.tamaño());
         lista.removerDelComienzo();
         System.out.println(lista);
+        lista.removeDelFinal();
+        System.out.println(lista);
     }
 }

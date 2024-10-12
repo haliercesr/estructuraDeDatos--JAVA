@@ -1,19 +1,25 @@
 package com.aluracursos.estructuradedatos.modelos;
 
+import java.util.Objects;
+
 public class Celula {
 
     private Object elemento;
-    private Celula proximo;
+    private Object proximo;
     private Celula anterior;
 
 
-    public Celula(Object elemento, Celula proximo) {
+    public Celula(Object elemento,Object proximo) {
         this.elemento = elemento;
         this.proximo = proximo;
     }
 
+    public Celula(Object elemento) {
+        this(null, elemento);
+    }
+
     public Celula getProximo() {
-        return proximo;
+        return (Celula) proximo;
     }
 
     public void setProximo(Celula proximo) {
