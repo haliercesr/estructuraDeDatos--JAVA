@@ -22,6 +22,13 @@ public class VectorTeste {
         System.out.println(lista.obtener(1));
         lista.adiciona(1,a3);
         System.out.println(lista);
+        lista.remove(0);
+        System.out.println(lista);
+        for (int i = 0; i < 250; i++) {
+            Alumno y= new Alumno("Joao"+i);
+            lista.adicionar(y);
+        }
+        System.out.println(lista);
 
     }
 }

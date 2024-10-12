@@ -1,5 +1,6 @@
 package com.aluracursos.estructuradedatos.modelos;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Vector {
@@ -15,13 +16,14 @@ public class Vector {
         //        break;
         //    }}
         //Para no recorrer todo el array cada vez que se agrega un alumno
+        this.guardarEspacio(); //comprueba que no se llene el array cada vez que se agrega un nuevo alumno
         this.alumnos[totalDeAlumnos] = alumno;
         totalDeAlumnos++;
 
     }
 
     public void adiciona(int posicion, Alumno alumno) {
-
+        this.guardarEspacio(); //comprueba que no se llene el array cada vez que se agrega un nuevo alumno
         if(!posicionOcupada(posicion)) {
             throw new IllegalArgumentException("posicion invalida");
         }
@@ -48,6 +50,10 @@ public class Vector {
 
     public void remove(int posicion) {
         //elimina por la posición
+        for(int i = posicion; i < this.totalDeAlumnos; i++) {
+            this.alumnos[i] = this.alumnos[i+1];
+        }
+        totalDeAlumnos--;
     }
 
     public boolean contiene(Alumno alumno) {
@@ -68,6 +74,16 @@ public class Vector {
     public String toString() {
         //Facilitará la impresión
         return Arrays.toString(alumnos);
+    }
+
+    public void guardarEspacio(){
+        if(totalDeAlumnos==alumnos.length){
+            Alumno[] nuevoArray=new Alumno[alumnos.length*2];
+            for (int i = 0; i < alumnos.length; i++) {
+                nuevoArray[i] = alumnos[i];
+            }
+            this.alumnos = nuevoArray;
+        }
     }
 
 
